@@ -14,6 +14,8 @@ with open('fashion_{}_dials_retrieval_candidates.json'.format(args.mode)) as inf
     
 dial_index = 0
 
+print("Writing to ' + '{}.txt'.format(args.mode))
+
 outfile = open('{}.txt'.format(args.mode), 'w')
 for content in data['dialogue_data']:
     turn_index = 0
@@ -38,3 +40,5 @@ for content in data['dialogue_data']:
         turn_index += 1
         
     dial_index += 1
+
+print("Writing done!")
