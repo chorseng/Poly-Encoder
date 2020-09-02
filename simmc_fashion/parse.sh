@@ -3,5 +3,5 @@
 
 python3 parse.py --mode train
 python3 parse.py --mode dev
-python3 merge.py # combine test file and ans
+# python3 merge.py # combine test file and ans - I don't need this
 python3 parse.py --mode devtest
