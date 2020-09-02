@@ -14,7 +14,7 @@ with open('furniture_{}_dials_retrieval_candidates.json'.format(args.mode)) as i
     
 dial_index = 0
 
-print("Writing to ' + '{}.txt'.format(args.mode))
+print("Writing to " + '{}.txt'.format(args.mode))
 
 outfile = open('{}.txt'.format(args.mode), 'w')
 for content in data['dialogue_data']:
