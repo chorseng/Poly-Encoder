@@ -8,21 +8,33 @@ args = parser.parse_args()
 
 with open('{}.json'.format(args.mode)) as infile:
     data = json.load(infile)
+    
+with open('fashion_{}_dials_retrieval_candidates.json'.format(args.mode)) as infile:
+    responses = json.load(infile)
+    
+dial_index = 0
 
 outfile = open('{}.txt'.format(args.mode), 'w')
-for content in data:
-    messages = content['messages-so-far']
-    options = content['options-for-correct-answers']
-    option = options[0]
-    correct_id = option['candidate-id']
+for content in data['dialogue_data']:
+    turn_index = 0
+    turns = content['dialogue']
     context = []
-    for message in messages:
-        text = message['speaker'].replace('_', ' ') + ': ' + message['utterance']
+    for turn in turns:
+        options = responses['retrieval_candidates'][dial_index]['retrieval_candidates'][turn_index]['retrieval_candidates']
+        correct_id = options[0]
+        option = responses['system_transcript_pool'][correct_id]
+        text = 'participant_1'.replace('_', ' ') + ': ' + turn['transcript']
         context.append(text)
-    outfile.write('{}\t{}\t{}\n'.format(1, '\t'.join(context), option['utterance'].strip()))
-    # write negative samples
-    if args.mode != 'train':
-        negs = content['options-for-next']
-        for neg in negs:
-            if neg['candidate-id'] != correct_id:
-                outfile.write('{}\t{}\t{}\n'.format(0, '\t'.join(context), neg['utterance'].strip()))
+        outfile.write('{}\t{}\t{}\n'.format(1, '\t'.join(context), option.strip()))
+        
+        if args.mode != 'train':
+            negs = options[1:]
+            for neg in negs:
+                outfile.write('{}\t{}\t{}\n'.format(0, '\t'.join(context), responses['system_transcript_pool'][neg].strip()))
+        
+        text = 'participant_2'.replace('_', ' ') + ': ' + turn['system_transcript']
+        context.append(text)               
+        
+        turn_index += 1
+        
+     dial_index += 1
