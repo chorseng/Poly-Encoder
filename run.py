@@ -46,6 +46,7 @@ def eval_running_model(dataloader, test=False):
             logits = model(context_token_ids_list_batch, context_input_masks_list_batch,
                                           response_token_ids_list_batch, response_input_masks_list_batch)
             loss = loss_fct(logits, torch.argmax(labels_batch, 1))
+        print(logits)
         r2_indices = torch.topk(logits, 2)[1] # R 2 @ 100
         r5_indices = torch.topk(logits, 5)[1] # R 5 @ 100
         r10_indices = torch.topk(logits, 10)[1] # R 10 @ 100
@@ -62,6 +63,7 @@ def eval_running_model(dataloader, test=False):
         eval_loss += loss.item()
         nb_eval_examples += labels_batch.size(0)
         nb_eval_steps += 1
+        print("Steps: " + str(step))
     eval_loss = eval_loss / nb_eval_steps
     eval_accuracy = r1 / nb_eval_examples
     if not test:
