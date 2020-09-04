@@ -56,7 +56,6 @@ def eval_running_model(dataloader, test=False):
         r2 += ((r2_indices==0).sum(-1)).sum().item()
         r5 += ((r5_indices==0).sum(-1)).sum().item()
         r10 += ((r10_indices==0).sum(-1)).sum().item()
-        print("Step: ", str(step), " recall: ", r1, r2, r5, r10)
         # mrr
         logits = logits.data.cpu().numpy()
         for logit in logits:
