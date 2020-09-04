@@ -47,7 +47,7 @@ def eval_running_model(dataloader, test=False):
                                           response_token_ids_list_batch, response_input_masks_list_batch)
             loss = loss_fct(logits, torch.argmax(labels_batch, 1))
         print(logits)
-        print("Shape = ", logits.get_shape())
+        print("Shape = ", list(logits.size()))
         r2_indices = torch.topk(logits, 2)[1] # R 2 @ 100
         r5_indices = torch.topk(logits, 5)[1] # R 5 @ 100
         r10_indices = torch.topk(logits, 10)[1] # R 10 @ 100
