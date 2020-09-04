@@ -89,7 +89,7 @@ def eval_running_model(dataloader, test=False):
             'R10': r10 / nb_eval_examples,
             'MRR': np.mean(mrr),
         }
-    with open('./scores_data.txt', 'w') as outfile:
+    with open('./scores_data.json', 'w') as outfile:
         json.dump(list(results_out), outfile)
         
     return result
