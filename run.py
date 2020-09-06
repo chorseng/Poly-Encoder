@@ -59,7 +59,7 @@ def eval_running_model(dataloader, test=False):
         # mrr
         logits = logits.data.cpu().numpy()
         for logit in logits:
-            if results_out: results_out.append(logit.tolist()) 
+            if test: results_out.append(logit.tolist()) 
             y_true = np.zeros(len(logit))
             y_true[0] = 1
             mrr.append(label_ranking_average_precision_score([y_true], [logit]))
