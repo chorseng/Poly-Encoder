@@ -16,7 +16,7 @@ from torch.utils.data import DataLoader
 from transformers import BertModel, BertConfig, BertTokenizer, BertTokenizerFast, AutoTokenizer
 from transformers import DistilBertModel, DistilBertConfig, DistilBertTokenizer
 from transformers.modeling_bart import BartLMHeadModel
-from transfers.modeling_encoder_decoder import EncoderDecoderModel
+from transformers.modeling_encoder_decoder import EncoderDecoderModel
 from transformers.optimization import AdamW, get_linear_schedule_with_warmup
 
 from dataset import SelectionDataset
@@ -151,7 +151,7 @@ if __name__ == '__main__':
     MODEL_CLASSES = {
         'bert': (BertConfig, BertTokenizerFast, BertModel),
         'distilbert': (DistilBertConfig, DistilBertTokenizer, DistilBertModel),
-        'bart': (BartConfig, BartTokenizerFast, BartModel),
+        'bart': (BartConfig, BartTokenizer, BartModel),
     }
     ConfigClass, TokenizerClass, BertModelClass = MODEL_CLASSES[args.model_type]
 
