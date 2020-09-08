@@ -16,6 +16,7 @@ from torch.utils.data import DataLoader
 from transformers import BertModel, BertConfig, BertTokenizer, BertTokenizerFast, AutoTokenizer
 from transformers import DistilBertModel, DistilBertConfig, DistilBertTokenizer
 from transformers import BartModel, BartConfig, BartTokenizer
+from transformers import AutoTokenizer
 from transformers.modeling_bart import BartLMHeadModel
 from transformers.modeling_encoder_decoder import EncoderDecoderModel
 from transformers.optimization import AdamW, get_linear_schedule_with_warmup
@@ -157,7 +158,7 @@ if __name__ == '__main__':
     ConfigClass, TokenizerClass, BertModelClass = MODEL_CLASSES[args.model_type]
 
     ## init dataset and bert model
-    tokenizer = TokenizerClass.from_pretrained("../bart-base", do_lower_case=True, clean_text=False)
+    tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large", do_lower_case=True, clean_text=False)
     #tokenizer = TokenizerClass.from_pretrained(os.path.join(args.bert_model, "vocab.txt"), do_lower_case=True, clean_text=False)
     context_transform = SelectionJoinTransform(tokenizer=tokenizer, max_len=args.max_contexts_length)
     response_transform = SelectionSequentialTransform(tokenizer=tokenizer, max_len=args.max_response_length)
