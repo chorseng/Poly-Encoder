@@ -15,6 +15,7 @@ from torch.utils.data import DataLoader
 
 from transformers import BertModel, BertConfig, BertTokenizer, BertTokenizerFast, AutoTokenizer
 from transformers import DistilBertModel, DistilBertConfig, DistilBertTokenizer
+from transformers import BartModel, BartConfig, BartTokenizer
 from transformers.modeling_bart import BartLMHeadModel
 from transformers.modeling_encoder_decoder import EncoderDecoderModel
 from transformers.optimization import AdamW, get_linear_schedule_with_warmup
