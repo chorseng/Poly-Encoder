@@ -13,7 +13,10 @@ from torch.nn import CrossEntropyLoss
 from torch.optim import Adam
 from torch.utils.data import DataLoader
 
-from transformers import BertModel, BertConfig, BertTokenizer, BertTokenizerFast
+from transformers import BertModel, BertConfig, BertTokenizer, BertTokenizerFast, AutoTokenizer
+from transformers import DistilBertModel, DistilBertConfig, DistilBertTokenizer
+from transformers.modeling_bart import BartLMHeadModel
+from transfers.modeling_encoder_decoder import EncoderDecoderModel
 from transformers.optimization import AdamW, get_linear_schedule_with_warmup
 
 from dataset import SelectionDataset
@@ -101,7 +104,7 @@ if __name__ == '__main__':
     ## Required parameters
     parser.add_argument("--bert_model", default='ckpt/pretrained/bert-small-uncased', type=str)
     parser.add_argument("--eval", action="store_true")
-    parser.add_argument("--model_type", default='bert', type=str)
+    parser.add_argument("--model_type", default='bart', type=str)
     parser.add_argument("--output_dir", required=True, type=str)
     parser.add_argument("--train_dir", default='data/ubuntu_data', type=str)
 
@@ -147,6 +150,8 @@ if __name__ == '__main__':
 
     MODEL_CLASSES = {
         'bert': (BertConfig, BertTokenizerFast, BertModel),
+        'distilbert': (DistilBertConfig, DistilBertTokenizer, DistilBertModel),
+        'bart': (BartConfig, BartTokenizerFast, BartModel),
     }
     ConfigClass, TokenizerClass, BertModelClass = MODEL_CLASSES[args.model_type]
 
