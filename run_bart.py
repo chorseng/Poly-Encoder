@@ -81,6 +81,7 @@ def eval_running_model(dataloader, test=False):
             'R2': r2 / nb_eval_examples,
             'R5': r5 / nb_eval_examples,
             'R10': r10 / nb_eval_examples,
+            'MR': np.mean(1/mrr),
             'MRR': np.mean(mrr),
             'epoch': epoch,
             'global_step': global_step,
@@ -92,6 +93,7 @@ def eval_running_model(dataloader, test=False):
             'R2': r2 / nb_eval_examples,
             'R5': r5 / nb_eval_examples,
             'R10': r10 / nb_eval_examples,
+            'MR': np.mean(1/mrr),
             'MRR': np.mean(mrr),
         }
     if test:
