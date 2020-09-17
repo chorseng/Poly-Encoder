@@ -131,6 +131,7 @@ if __name__ == '__main__':
 
     parser.add_argument("--num_train_epochs", default=10.0, type=float,
                                             help="Total number of training epochs to perform.")
+    parser.add_argument('--set_seed', action = "store_true")
     parser.add_argument('--seed', type=int, default=12345, help="random seed for initialization")
     parser.add_argument('--gradient_accumulation_steps', type=int, default=1,
                                             help="Number of updates steps to accumulate before performing a backward/update pass.")
@@ -150,7 +151,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
     print(args)
     os.environ["CUDA_VISIBLE_DEVICES"] = "%d" % args.gpu
-    set_seed(args)
+    if args.set_seed:
+        set_seed(args)
 
     MODEL_CLASSES = {
         'bert': (BertConfig, BertTokenizerFast, BertModel),
