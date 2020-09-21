@@ -34,6 +34,22 @@ def set_seed(args):
     random.seed(args.seed)
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
+    
+def export_results(results_out):
+    
+    with open(os.path.join(args.train_dir, 'candidates.json')) as f:
+        candidates = json.load(f)
+    output = []
+    idx = 0
+    for dial in candidates['retrieval_candidates']:
+        output_dict = {"dialog_id": dial['dialogue_idx'], "candidate_scores": []}
+        for turn in dial['retrieval_candidates']:
+            output_dict['candidate_scores'].append(data[idx])
+            idx+=1
+        output.append(output_dict)
+    output_path = os.path.join(args.output_dir, '{}_{}_output.json'.format(args.architecture, args.poly_m))
+    with open(os.path.join(output_path, 'w') as outfile:
+            json.dump(list(results_out), outfile)
 
 def eval_running_model(dataloader, test=False):
     loss_fct = CrossEntropyLoss()
@@ -99,6 +115,7 @@ def eval_running_model(dataloader, test=False):
     if test:
         with open('./scores_data.json', 'w') as outfile:
             json.dump(list(results_out), outfile)
+        export_results(results_out)
         
     return result
 
@@ -111,7 +128,7 @@ if __name__ == '__main__':
     parser.add_argument("--model_type", default='bart', type=str)
     parser.add_argument("--output_dir", required=True, type=str)
     parser.add_argument("--train_dir", default='data/ubuntu_data', type=str)
-
+    parser.add_argument("--domain", default = 'fashion', type=str)
     parser.add_argument("--use_pretrain", action="store_true")
     parser.add_argument("--architecture", required=True, type=str, help='[poly, bi]')
 
