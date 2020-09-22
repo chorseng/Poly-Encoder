@@ -44,12 +44,12 @@ def export_results(results_out):
     for dial in candidates['retrieval_candidates']:
         output_dict = {"dialog_id": dial['dialogue_idx'], "candidate_scores": []}
         for turn in dial['retrieval_candidates']:
-            output_dict['candidate_scores'].append(data[idx])
+            output_dict['candidate_scores'].append(results_out[idx])
             idx+=1
         output.append(output_dict)
     output_path = os.path.join(args.output_dir, '{}_{}_output.json'.format(args.architecture, args.poly_m))
-    with open(os.path.join(output_path, 'w') as outfile:
-            json.dump(list(results_out), outfile)
+    with open(output_path, 'w') as outfile:
+            json.dump(results_out, outfile)
 
 def eval_running_model(dataloader, test=False):
     loss_fct = CrossEntropyLoss()
@@ -115,7 +115,7 @@ def eval_running_model(dataloader, test=False):
     if test:
         with open('./scores_data.json', 'w') as outfile:
             json.dump(list(results_out), outfile)
-        export_results(results_out)
+        export_results(list(results_out)x)
         
     return result
 
