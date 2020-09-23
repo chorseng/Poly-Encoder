@@ -49,7 +49,7 @@ def export_results(results_out):
         output.append(output_dict)
     output_path = os.path.join(args.output_dir, '{}_{}_output.json'.format(args.architecture, args.poly_m))
     with open(output_path, 'w') as outfile:
-            json.dump(results_out, outfile)
+        json.dump(output, outfile)
 
 def eval_running_model(dataloader, test=False):
     loss_fct = CrossEntropyLoss()
