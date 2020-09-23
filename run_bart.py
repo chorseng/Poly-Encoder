@@ -115,7 +115,7 @@ def eval_running_model(dataloader, test=False):
     if test:
         with open('./scores_data.json', 'w') as outfile:
             json.dump(list(results_out), outfile)
-        export_results(list(results_out)x)
+        export_results(list(results_out))
         
     return result
 
